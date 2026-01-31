@@ -26,7 +26,7 @@ export default function Navigation() {
                                         <Link href="/projects/mnist-digit-classification" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">MNIST Digit Classification</Link>
                                     </li>
                                     <li>
-                                        <Link href="/projects/project-2" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Project 2</Link>
+                                        <Link href="/projects/raspberry-pi-gemini-voice-assistant" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Raspberry Pi Assistant</Link>
                                     </li>
                                     <li>
                                         <Link href="/projects/project-3" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Project 3</Link>

@@ -29,7 +29,7 @@ export default function Navigation() {
                                         <Link href="/projects/raspberry-pi-gemini-voice-assistant" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Raspberry Pi Assistant</Link>
                                     </li>
                                     <li>
-                                        <Link href="/projects/project-3" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Project 3</Link>
+                                        <Link href="/projects/snake" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Snake</Link>
                                     </li>
                                 </ul>
                             </div>

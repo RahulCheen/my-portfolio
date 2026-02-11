@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 export default function Projects() {
     const projects = [
-        { id: 'mnist-digit-classification', title: 'MNIST Digit Classification', description: 'Classifying handwritten digits using CNNs in PyTorch.', tags: ['Python', 'PyTorch', 'Deep Learning', 'CNN'] },
-        { id: 'project-2', title: 'Project 2', description: 'A brief description of Project 2.', tags: ['TypeScript', 'Node.js'] },
-        { id: 'project-3', title: 'Project 3', description: 'A brief description of Project 3.', tags: ['Python', 'Django'] },
+        { id: 'mnist-digit-classification', title: 'MNIST Digit Classification', description: 'Comparison of CNN architectures on digit classification.', tags: ['Python', 'PyTorch', 'Deep Learning', 'CNN', 'Computer Vision'] },
+        { id: 'raspberry-pi-gemini-voice-assistant', title: 'Raspberry Pi Assistant', description: 'A custom voice agent leveraging the Google Gemini API.', tags: ['Python', 'Raspberry Pi', 'Gemini', 'NLP', 'Automation'] },
+        { id: 'snake', title: 'Snake', description: 'An OOP practicum recreating everyone\'s first videogame.', tags: ['Python', 'OOP', 'Game design'] },
     ];
 
     return (

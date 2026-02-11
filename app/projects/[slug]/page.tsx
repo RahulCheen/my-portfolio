@@ -10,7 +10,7 @@ type Props = {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-const PROJECT_REGISTRY: Record<string, {repo: string; user: string; videoId?: string}> = {
+const PROJECT_REGISTRY: Record<string, {repo: string; user: string; videoId?: string; hasGame?: boolean}> = {
     'mnist-digit-classification': {
         user: 'RahulCheen',
         repo: 'MNIST-Digit-Classification',
@@ -19,6 +19,11 @@ const PROJECT_REGISTRY: Record<string, {repo: string; user: string; videoId?: st
     'raspberry-pi-gemini-voice-assistant': {
         user: 'RahulCheen',
         repo: 'RasPi-Gemini-Assistant',
+    },
+    'snake': {
+        user: 'RahulCheen',
+        repo: 'SnakeAI',
+        hasGame: true,
     }
 };
 

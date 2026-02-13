@@ -5,9 +5,12 @@ export interface CellState {
   value: number;
   isFixed: boolean; 
   isError: boolean; 
+  notes: number[];
 }
 
 export const useSudoku = () => {
+  const [isNoteMode, setIsNoteMode] = useState(false);
+
   const [grid, setGrid] = useState<CellState[][]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [selectedCell, setSelectedCell] = useState<{ r: number; c: number } | null>(null);
@@ -18,7 +21,8 @@ export const useSudoku = () => {
       row.map(val => ({
         value: val,
         isFixed: val !== 0,
-        isError: false
+        isError: false,
+        notes: []
       }))
     );
     setGrid(stateGrid);
@@ -45,23 +49,40 @@ export const useSudoku = () => {
       );
   }, []);
 
+  const toggleNoteMode = () => setIsNoteMode(prev => !prev);
+
   const updateCell = (r: number, c: number, value: number) => {
     if (grid[r][c].isFixed) return;
 
     setGrid(prev => {
       const newGrid = prev.map(row => [...row]);
-      const numGrid: SudokuGrid = newGrid.map((row, rowIndex) => 
-        row.map((cell, colIndex) => {
-          if (rowIndex === r && colIndex === c) return 0;
-          return cell.value;
-        })
-    );
-      const hasError = value !== 0 && !isValid(numGrid, r, c, value);
-      
-      newGrid[r][c] = { ...newGrid[r][c], value, isError: hasError };
+      const cell = newGrid[r][c];
+
+      if (isNoteMode) {
+        const notes = cell.notes.includes(value)
+          ? cell.notes.filter(n => n !== value)
+          : [...cell.notes, value].sort();
+        newGrid[r][c] = { ...cell, value: 0, notes };
+      } else {
+        const numberGrid: SudokuGrid = newGrid.map((row, ri) => 
+          row.map((col, ci) => (ri === r && ci === c ? 0 : col.value))
+        );
+        const hasError = value !== 0 && !isValid(numberGrid, r, c, value);
+        newGrid[r][c] = { ...cell, value, notes: [], isError: hasError };
+      }
       return newGrid;
     });
   };
 
-  return { grid, difficulty, selectedCell, startNewGame, resetGame, updateCell, onSelectCell: selectCell, setSelectedCell };
+  return {
+    grid,
+    difficulty,
+    selectedCell,
+    isNoteMode,
+    startNewGame,
+    resetGame,
+    toggleNoteMode,
+    updateCell,
+    onSelectCell:selectCell,
+    setSelectedCell };
 };

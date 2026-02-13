@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { generateSudoku, isValid, SudokuGrid, Difficulty } from '@/lib/sudokuEngine';
 
 export interface CellState {
@@ -10,10 +10,26 @@ export interface CellState {
 
 export const useSudoku = () => {
   const [isNoteMode, setIsNoteMode] = useState(false);
-
+  const [seconds, setSeconds] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [grid, setGrid] = useState<CellState[][]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [selectedCell, setSelectedCell] = useState<{ r: number; c: number } | null>(null);
+
+  const isWon = grid.length > 0 &&
+              grid.every(row => row.every(cell => cell.value !== 0)) &&
+              !grid.some(row => row.some(cell => cell.isError));
+
+  useEffect(() => {
+    if (!isWon) {
+      timerRef.current = setInterval(() => {
+        setSeconds(s => s + 1);
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+    return () => {if (timerRef.current) clearInterval(timerRef.current); };
+  }, [isWon]);
 
   const startNewGame = useCallback((level: Difficulty = 'easy') => {
     const newGrid = generateSudoku(level);
@@ -28,6 +44,7 @@ export const useSudoku = () => {
     setGrid(stateGrid);
     setDifficulty(level);
     setSelectedCell(null);
+    setSeconds(0);
   }, []);
 
   const selectCell = useCallback((r: number, c: number) => {
@@ -74,11 +91,19 @@ export const useSudoku = () => {
     });
   };
 
+  const formatTime = (totalSeconds: number) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
   return {
     grid,
     difficulty,
     selectedCell,
     isNoteMode,
+    gameStatus: isWon ? 'won' : 'playing',
+    timerText: formatTime(seconds),
     startNewGame,
     resetGame,
     toggleNoteMode,

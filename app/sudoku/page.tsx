@@ -16,7 +16,9 @@ export default function SudokuPage() {
     selectedCell,
     onSelectCell,
     isNoteMode,
-    toggleNoteMode
+    toggleNoteMode,
+    gameStatus,
+    timerText
   } = useSudoku();
   
   useEffect(() => {
@@ -42,12 +44,32 @@ export default function SudokuPage() {
             onReset={resetGame} 
         />
 
+        <div className="flex justify-between w-full max-w-md mb-4 px-2 font-mono text-xl text-blue-400">
+          <span className="capitalize">{difficulty}</span>
+          <span>{timerText}</span>
+        </div>
+
         <SudokuBoard
           grid={grid}
           selectedCell={selectedCell}
           onSelectCell={onSelectCell}
           onCellChange={updateCell}
         />
+
+        {gameStatus === 'won' && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm animate-fade-in rounded-lg border-2 border-teal-400/50">
+            <h2 className="text-5xl font-black text-white mb-2 drop-shadow-[0_0_15px_rgba(45,212,191,0.8)]">
+              You Win!
+            </h2>
+            <p className="text-teal-300 text-xl font-bold">Time: {timerText}</p>
+            <button 
+              onClick={() => startNewGame(difficulty)}
+              className="mt-6 px-6 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold rounded-full transition-all"
+            >
+              Play Again
+            </button>
+          </div>
+        )}
 
         <Numpad
           grid={grid}

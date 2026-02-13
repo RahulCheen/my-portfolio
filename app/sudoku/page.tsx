@@ -6,7 +6,15 @@ import Controls from '../components/sudoku/Controls';
 import { useSudoku } from './useSudoku';
 
 export default function SudokuPage() {
-const { grid, difficulty, startNewGame, updateCell, resetGame } = useSudoku();
+const {
+  grid,
+  difficulty,
+  startNewGame,
+  updateCell,
+  resetGame,
+  selectedCell,
+  setSelectedCell
+} = useSudoku();
   useEffect(() => {
     startNewGame('easy');
   }, [startNewGame]);
@@ -24,7 +32,11 @@ const { grid, difficulty, startNewGame, updateCell, resetGame } = useSudoku();
             onReset={resetGame} 
         />
 
-        <SudokuBoard grid={grid} onCellChange={updateCell} />
+        <SudokuBoard
+          grid={grid}
+          selectedCell={selectedCell}
+          onSelectCell={(r, c) => setSelectedCell({ r, c })}
+          onCellChange={updateCell} />
       </div>
       <p className="mt-8 text-slate-400 max-w-md text-center">
         Blue numbers are your guesses; grey are fixed clues; red guesses are wrong.

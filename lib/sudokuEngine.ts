@@ -173,7 +173,7 @@ export const generateSudoku = (difficulty: Difficulty): SudokuGrid => {
   fill(grid);
   const solution = cloneGrid(grid);
 
-  const targetClues = { easy: 40, medium: 32, hard: 26 }[difficulty];
+  const targetClues = { easy: 40, medium: 34, hard: 28 }[difficulty];
   const cells = Array.from({ length: 81 }, (_, i) => [Math.floor(i / 9), i % 9]).sort(
     () => Math.random() - 0.5
   );

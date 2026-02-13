@@ -10,10 +10,11 @@ export interface CellState {
 export const useSudoku = () => {
   const [grid, setGrid] = useState<CellState[][]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
+  const [selectedCell, setSelectedCell] = useState<{ r: number; c: number } | null>(null);
 
   const startNewGame = useCallback((level: Difficulty = 'easy') => {
     const newGrid = generateSudoku(level);
-    const stateGrid = newGrid.map(row => 
+    const stateGrid: CellState[][] = newGrid.map(row => 
       row.map(val => ({
         value: val,
         isFixed: val !== 0,
@@ -22,6 +23,7 @@ export const useSudoku = () => {
     );
     setGrid(stateGrid);
     setDifficulty(level);
+    setSelectedCell(null);
   }, []);
 
   const resetGame = useCallback(() => {
@@ -54,5 +56,5 @@ export const useSudoku = () => {
     });
   };
 
-  return { grid, difficulty, startNewGame, resetGame, updateCell };
+  return { grid, difficulty, selectedCell, startNewGame, resetGame, updateCell, setSelectedCell };
 };

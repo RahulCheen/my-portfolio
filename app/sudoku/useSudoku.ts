@@ -26,6 +26,13 @@ export const useSudoku = () => {
     setSelectedCell(null);
   }, []);
 
+  const selectCell = useCallback((r: number, c: number) => {
+    setSelectedCell(prev => {
+      if (prev?.r === r && prev?.c === c) return null;
+      return { r, c };
+    });
+  }, []);
+
   const resetGame = useCallback(() => {
     setGrid(prev =>
         prev.map(row => 
@@ -56,5 +63,5 @@ export const useSudoku = () => {
     });
   };
 
-  return { grid, difficulty, selectedCell, startNewGame, resetGame, updateCell, setSelectedCell };
+  return { grid, difficulty, selectedCell, startNewGame, resetGame, updateCell, onSelectCell: selectCell, setSelectedCell };
 };

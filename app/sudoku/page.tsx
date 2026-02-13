@@ -13,7 +13,7 @@ const {
   updateCell,
   resetGame,
   selectedCell,
-  setSelectedCell
+  onSelectCell
 } = useSudoku();
   useEffect(() => {
     startNewGame('easy');
@@ -35,7 +35,7 @@ const {
         <SudokuBoard
           grid={grid}
           selectedCell={selectedCell}
-          onSelectCell={(r, c) => setSelectedCell({ r, c })}
+          onSelectCell={onSelectCell}
           onCellChange={updateCell} />
       </div>
       <p className="mt-8 text-slate-400 max-w-md text-center">

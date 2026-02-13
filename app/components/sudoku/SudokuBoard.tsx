@@ -26,14 +26,11 @@ const SudokuBoard: React.FC<Props> = ({ grid, selectedCell, onSelectCell, onCell
         row.map((cell, cIdx) => {
           const isSelected = selectedCell?.r === rIdx && selectedCell?.c === cIdx;
           const isSameRowCol= selectedCell?.r === rIdx || selectedCell?.c === cIdx;
-          const isSameBox = selectedCell && 
-            Math.floor(rIdx / 3) === Math.floor(selectedCell.r / 3) &&
-            Math.floor(cIdx / 3) === Math.floor(selectedCell.c / 3);
           const isSameNumber = selectedValue !== 0 && cell.value === selectedValue;
-          const isHighlighted = isSameRowCol || isSameBox || isSameNumber;
+          const isHighlighted = isSameRowCol || isSameNumber;
 
-          const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? 'border-r-4 border-slate-600' : 'border-r border-slate-700';
-          const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? 'border-b-4 border-slate-600' : 'border-b border-slate-700';
+          const borderRight = (cIdx + 1) % 3 === 0 && cIdx !== 8 ? 'border-r-4 border-gray-700' : 'border-r border-gray-700';
+          const borderBottom = (rIdx + 1) % 3 === 0 && rIdx !== 8 ? 'border-b-4 border-gray-700' : 'border-b border-gray-700';
 
           return (
             <input
@@ -41,9 +38,14 @@ const SudokuBoard: React.FC<Props> = ({ grid, selectedCell, onSelectCell, onCell
               type="text"
               readOnly={cell.isFixed}
               inputMode="numeric"
-              maxLength={1}
               value={cell.value === 0 ? '' : cell.value}
-              onFocus={() => onSelectCell(rIdx, cIdx)}
+              onClick={() => onSelectCell(rIdx, cIdx)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  if (isSelected) onSelectCell(rIdx, cIdx);
+                  (e.target as HTMLInputElement).blur();
+                }
+              }}
               onChange={(e) => {
                 const val = parseInt(e.target.value.slice(-1));
                 onCellChange(rIdx, cIdx, isNaN(val) ? 0 : val);
@@ -52,14 +54,12 @@ const SudokuBoard: React.FC<Props> = ({ grid, selectedCell, onSelectCell, onCell
                 w-10 h-10 sm:w-14 sm:h-14 text-center text-xl font-bold transition-all outline-none cursor-pointer
                 ${borderRight} ${borderBottom}
                 ${cell.isFixed ? 'text-slate-400' : 'text-blue-400'}
-                ${isSelected 
-                  ? (cell.isFixed ? 'bg-blue-900/60' : 'bg-blue-500/40') 
-                  : isSameNumber 
-                    ? (cell.isFixed ? 'bg-blue-900/40' : 'bg-blue-400/20')
-                    : isHighlighted 
-                      ? (cell.isFixed ? 'bg-slate-900/50' : 'bg-slate-700/50')
-                      : cell.isFixed ? 'bg-slate-900/50' : 'bg-slate-800'
-                }
+                ${isSelected ? 'bg-blue-500/40' : 
+                  isSameNumber ? 'bg-sky-700/30' : 
+                  isHighlighted ? 'bg-blue-500/10' : 
+                  cell.isFixed ? 'bg-slate-900' : 'bg-slate-800'
+                  }
+                ${cell.isError ? 'bg-red-500/30 text-red-400' : ''}
               `}
             />
           );

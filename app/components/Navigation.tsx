@@ -25,13 +25,13 @@ export default function Navigation() {
                                         <Link href="/projects/mnist-digit-classification" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">MNIST Digit Classification</Link>
                                     </li>
                                     <li>
+                                        <Link href="/sudoku" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Sudoku</Link>
+                                    </li>
+                                    <li>
                                         <Link href="/projects/raspberry-pi-gemini-voice-assistant" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Raspberry Pi Assistant</Link>
                                     </li>
                                     <li>
                                         <Link href="/projects/snake" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Snake</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/sudoku" className="block px-4 py-2 hover:bg-slate-700 hover:text-white">Sudoku</Link>
                                     </li>
                                 </ul>
                             </div>

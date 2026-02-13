@@ -64,7 +64,7 @@ const SudokuBoard: React.FC<Props> = ({ grid, selectedCell, onSelectCell, onCell
               {cell.value !== 0 ? (
                 <span className={`text-xl font-bold ${
                   cell.isFixed ? 'text-slate-400' : 
-                  cell.isError ? 'text-red-400 underline decoration-2' : 'text-blue-400'
+                  cell.isError ? 'text-red-400 decoration-2' : 'text-blue-400'
                 }`}>
                   {cell.value}
                 </span>
